@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -10,7 +11,7 @@ public class EntityAttack : MonoBehaviour
     public event UnityAction OnAttack;
     private int _bonusDamage = 0;
 
-    private bool _canAttack = true;
+    public bool _canAttack = true;
 
     public IEnumerator LaunchAttack()
     {
@@ -18,14 +19,18 @@ public class EntityAttack : MonoBehaviour
         foreach (var el in _attackZone.InZone)
         {
             //el.Damage(10);
+            
             if (_canAttack)
             {
-                Debug.Log("TAPEEEEEEEE " + _canAttack);
                 el.Damage(10 + _bonusDamage);
-                _canAttack = false;
-                yield return new WaitForSeconds(2f);
-                _canAttack = true;
             }
+        }
+
+        if (_attackZone.InZone.Count() > 0)
+        {
+            _canAttack = false;
+            yield return new WaitForSeconds(2f);
+            _canAttack = true;
         }
     }
 

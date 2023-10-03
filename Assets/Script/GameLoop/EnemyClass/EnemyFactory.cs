@@ -10,7 +10,7 @@ namespace Game
 
         public Vector3 EnemySpawnPosition()
         {
-            return transform.position; 
+            return transform.position;
         }
     }
 }

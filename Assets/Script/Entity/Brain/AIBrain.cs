@@ -41,10 +41,10 @@ public class AIBrain : MonoBehaviour
     private void Update()
     {
         // Attack
-        if(IsPlayerTooNear)
+        if(IsPlayerTooNear && _attack._canAttack)
         {
             _movement.Move(Vector2.zero);
-            _attack.LaunchAttack();
+            StartCoroutine(_attack.LaunchAttack());
         }
         // Move To Player
         else if (IsPlayerNear)

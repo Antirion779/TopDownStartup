@@ -7,16 +7,6 @@ namespace Game
 {
     public class Enemy2 : Entity
     {
-        private GameManager _gameManager;
-        private void Awake()
-        {
-            //insert enemy behaviour here. 
-        }
-        
-        private void OnDestroy()
-        {
-            //_gameManager.enemyList.Remove(gameObject);
-            _gameManager.DeleteEnemyFromList(this);
-        }
+        //insert behaviour here
     }
 }

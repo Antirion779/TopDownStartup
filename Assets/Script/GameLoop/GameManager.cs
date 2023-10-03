@@ -11,7 +11,14 @@ namespace Game.Script.GameLoop
         public List<GameObject> enemyList = new List<GameObject>();
         public List<EnemyFactory> factoryList = new List<EnemyFactory>();
 
+        public Entity player; 
+
         public int levelCleared = 0;
+
+        private void Awake()
+        {
+            player.objectDestroyed += (_) => Application.Quit(); 
+        }
 
         private void Update()
         {
@@ -28,12 +35,13 @@ namespace Game.Script.GameLoop
             {
                 var entity = factory.EntitySpawn();
                 enemyList.Add(entity.gameObject);
+                entity.objectDestroyed += DeleteEnemyFromList; 
             }
         }
 
-        public void DeleteEnemyFromList(Entity enemy)
+        public void DeleteEnemyFromList(GameObject enemy)
         {
-            enemyList.Remove(enemy.gameObject);
+            enemyList.Remove(enemy);
         }
 
         public void NextLevel()
