@@ -17,7 +17,9 @@ namespace Game
         
         private void OnDestroy()
         {
-            _gameManager.enemyList.Remove(gameObject);
+            
+            _gameManager.DeleteEnemyFromList(this);
+            //_gameManager.enemyList.Remove(gameObject);
         }
     }
 }

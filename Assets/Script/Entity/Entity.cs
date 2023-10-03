@@ -5,8 +5,10 @@ using UnityEngine;
 
 public class Entity : MonoBehaviour
 {
-    [SerializeField, Required("nop")] Health _health;
+    [Required("nop")]public Health health;
 
-
-
+    private void Awake()
+    {
+        health.OnDie += () => Destroy(gameObject);
+    }
 }

@@ -21,21 +21,22 @@ public class Health : MonoBehaviour, IHealth
     public bool IsDead => CurrentHealth <= 0;
     public int MaxHealth { get => _maxHealth; }
 
-    private void Start()
-    {
-        CurrentHealth = _maxHealth; 
-    }
-
     public event Action<int> OnDamage;
     public event Action<int> OnRegen;
     public event Action OnDie;
 
+    private void Start()
+    {
+        CurrentHealth = _maxHealth; 
+    }
+    
     public void Damage(int amount)
     {
         Assert.IsTrue(amount >= 0);
         if (IsDead) return;
 
         CurrentHealth = Mathf.Max(0, CurrentHealth - amount);
+        Debug.Log("Damages were instantiated. ");
         OnDamage?.Invoke(amount);
         
         if (CurrentHealth == 0)

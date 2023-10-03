@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Game
 {
-    public class Enemy3 : MonoBehaviour
+    public class Enemy3 : Entity
     {
         private GameManager _gameManager; 
         private void Awake()
@@ -15,6 +15,7 @@ namespace Game
         
         private void OnDestroy()
         {
+            _gameManager.DeleteEnemyFromList(this);
             _gameManager.enemyList.Remove(gameObject);
         }
     }

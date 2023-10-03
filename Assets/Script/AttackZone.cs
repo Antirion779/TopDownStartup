@@ -1,6 +1,7 @@
 using NaughtyAttributes;
 using System.Collections;
 using System.Collections.Generic;
+using Game.Script.GameLoop;
 using UnityEngine;
 
 public class AttackZone : MonoBehaviour
@@ -8,7 +9,8 @@ public class AttackZone : MonoBehaviour
     HashSet<IHealth> _inZone;
 
     public IEnumerable<IHealth> InZone => _inZone;
-
+    private AttackZone _attackZone;
+    [SerializeField] private int baseDamages; 
     private void Awake()
     {
         _inZone = new();  
@@ -16,20 +18,18 @@ public class AttackZone : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.TryGetComponent(out IHealth h))
+        IHealth h = collision.GetComponent<IHealth>(); 
+        if(h != null)
         {
             _inZone.Add(h);
+            Debug.Log("AJOUT " + collision.gameObject.name);
         }
-        else
-        {
-
-        }
-
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.TryGetComponent<IHealth>(out var h))
+        IHealth h = collision.GetComponent<IHealth>(); 
+        if(h != null)
         {
             _inZone.Remove(h);
         }

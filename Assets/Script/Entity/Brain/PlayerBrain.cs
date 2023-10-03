@@ -32,6 +32,7 @@ public class PlayerBrain : MonoBehaviour
 {
     [SerializeField, BoxGroup("Dependencies")] EntityMovement _movement;
 
+    [SerializeField, BoxGroup("Dependencies")]  EntityAttack _attack; 
     [SerializeField, BoxGroup("Input")] InputActionProperty _moveInput;
     [SerializeField, BoxGroup("Input")] InputActionProperty _attackInput;
 
@@ -42,25 +43,17 @@ public class PlayerBrain : MonoBehaviour
         _moveInput.action.performed += UpdateMove;
         _moveInput.action.canceled += StopMove;
         // Attack
-        //_attackInput.action.started += Attack;
+        _attackInput.action.started += Attack;
     }
-
-
-
 
     void run()
     {
         var speedbase = 10;
         var armurespeed = 1.3;
         var coffeefactor = 1.2f;
-
-
+        
         var s = speedbase * armurespeed * coffeefactor;
     }
-
-
-
-
 
     Coroutine _maCoroutine;
     public void RunCoucou()
@@ -94,6 +87,9 @@ public class PlayerBrain : MonoBehaviour
         _moveInput.action.started -= UpdateMove;
         _moveInput.action.performed -= UpdateMove;
         _moveInput.action.canceled -= StopMove;
+        
+        //Attack
+        _attackInput.action.started -= Attack; 
     }
 
 
@@ -104,5 +100,10 @@ public class PlayerBrain : MonoBehaviour
     private void StopMove(InputAction.CallbackContext obj)
     {
         _movement.Move(Vector2.zero);
+    }
+
+    private void Attack(InputAction.CallbackContext obj)
+    {
+        StartCoroutine(_attack.LaunchAttack());
     }
 }

@@ -74,5 +74,4 @@ public class EntityMovement : MonoBehaviour
     {
         _bonusSpeed += bonusSpeed;
     }
-
 }
