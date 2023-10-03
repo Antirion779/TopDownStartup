@@ -22,6 +22,7 @@ public class EntityMovement : MonoBehaviour
     Vector2 MoveDirection { get; set; }
     Vector2 OldVelocity { get; set; }
 
+    private int _bonusSpeed = 0; 
     public Alterable<float> CurrentSpeed { get; private set; }
 
     #region EDITOR
@@ -67,6 +68,11 @@ public class EntityMovement : MonoBehaviour
     public void ResetSpeed()
     {
 
+    }
+    
+    public void AddBonusSpeed(int bonusSpeed)
+    {
+        _bonusSpeed += bonusSpeed;
     }
 
 }

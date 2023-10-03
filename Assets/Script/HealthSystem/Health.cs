@@ -18,8 +18,13 @@ public class Health : MonoBehaviour, IHealth
         get;
         private set;
     }
-    public bool IsDead => CurrentHealth > 0;
+    public bool IsDead => CurrentHealth <= 0;
     public int MaxHealth { get => _maxHealth; }
+
+    private void Start()
+    {
+        CurrentHealth = _maxHealth; 
+    }
 
     public event Action<int> OnDamage;
     public event Action<int> OnRegen;
@@ -32,6 +37,11 @@ public class Health : MonoBehaviour, IHealth
 
         CurrentHealth = Mathf.Max(0, CurrentHealth - amount);
         OnDamage?.Invoke(amount);
+        
+        if (CurrentHealth == 0)
+        { 
+            Kill();
+        }
     }
     public void Regen(int amount)
     {
@@ -41,7 +51,7 @@ public class Health : MonoBehaviour, IHealth
     }
     public void Kill()
     {
-        if (IsDead) return;
+        if (!IsDead) return;
         InternalDie();
     }
 
@@ -64,5 +74,12 @@ public class Health : MonoBehaviour, IHealth
     {
         if (!IsDead) return;
         OnDie?.Invoke();
+    }
+    
+    
+    public void AddBonus(int bonus)
+    {
+        _maxHealth += bonus;
+        CurrentHealth += bonus; 
     }
 }
